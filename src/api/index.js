@@ -1,5 +1,5 @@
 import axios from 'axios';
-import createTypography from '@material-ui/core/styles/createTypography';
+// import createTypography from '@material-ui/core/styles/createTypography';
 
 const url= "https://covid19.mathdro.id/api";
 export const fetchData= async(country) => {
@@ -15,21 +15,16 @@ export const fetchData= async(country) => {
         return error
     }
 }
-export const fetchDailyData=async() => {
-    try{
-        const {data}=await axios.get('https://covid19.mathdro.id/api/daily');
-       const modifiedData= data.map((dailyData)=>
-       ({
-           confirmed: dailyData.confirmed.total,
-           deaths:dailyData.deaths.total,
-           date:dailyData.reportDate,
-       }));
-       return modifiedData;
-    }
-    catch(error){
-        console.log(error)
-    }
-}
+export const fetchDailyData = async () => {
+  try {
+    const { data } = await axios.get(`${url}/daily`);
+
+    return data.map(({ confirmed, deaths, reportDate: date }) => ({ confirmed: confirmed.total, deaths: deaths.total, date }));
+  } catch (error) {
+    return error;
+  }
+};
+
 
 export const fetchCountries = async() => {
     try{
